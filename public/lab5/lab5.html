@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testare JavaScript</title>
+</head>
+<body>
+
+<h1>Testare și Analiză JavaScript</h1>
+
+<div>
+    <textarea id="code" rows="10" cols="50">
+// Scrieți sau inserați aici codul JavaScript pe care doriți să îl testați și să îl analizați.
+console.log('Hello, world!');
+    </textarea>
+</div>
+
+<div>
+    <button onclick="executeCode()">Execută Codul</button>
+</div>
+
+<div id="output">
+    <h2>Rezultat:</h2>
+    <pre id="result"></pre> <!-- Pre pentru a afișa rezultatul într-un mod pre-formatat -->
+</div>
+
+<script>
+    function executeCode() {
+        const code = document.getElementById('code').value;
+        let result;
+        const consoleLog = console.log; // Salvăm funcția console.log originală
+        console.log = (message) => { // Suprascriem console.log pentru a captura ieșirea
+            result = message; // Salvăm rezultatul
+        };
+        try {
+            // Folosim Function() pentru a crea o funcție din codul introdus de utilizator
+            const func = new Function(code);
+            func(); // Apelăm funcția
+        } catch (error) {
+            result = error.message; // Dacă apare o eroare, afișăm mesajul de eroare
+        }
+        console.log = consoleLog; // Restaurăm funcția console.log originală
+        document.getElementById('result').textContent = result; // Afișăm rezultatul în pre
+    }
+</script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titluri de cărți cu întârziere</title>
+</head>
+<body>
+
+<h1>Titluri de cărți cu întârziere</h1>
+
+<button onclick="showBookTitles()">Afișează Titlurile</button>
+
+<div id="bookList" style="display: none; border: 1px solid black; padding: 10px;"></div>
+
+<script>
+    // Funcția pentru a afișa titlurile cu întârziere
+    function ArrayPlusDelay(array, delegate, delay) {
+        array.forEach(function (el, i) {
+            setTimeout(function() {
+                delegate(array[i]);
+            }, i * delay);
+        });
+    }
+
+    // Array-ul cu titlurile cărților
+    const bookTitles = [
+        "Moby Dick",
+        "Crima din Orient Express",
+        "O mie și una de nopți",
+        "Război și pace",
+        "Călătorie spre centrul Pământului"
+    ];
+
+    // Selectăm elementul HTML în care vom afișa titlurile cărților
+    const bookListContainer = document.getElementById('bookList');
+
+    // Funcția pentru a afișa fiecare titlu în HTML
+    function displayBookTitle(title) {
+        const bookItem = document.createElement('p'); // Creăm un element paragraf pentru fiecare titlu de carte
+        bookItem.textContent = title; // Adăugăm titlul cărții în conținutul paragrafului
+        bookListContainer.appendChild(bookItem); // Adăugăm paragraful în containerul pentru listă
+    }
+
+    // Funcția care este apelată atunci când butonul este apăsat
+    function showBookTitles() {
+        // Afișăm caseta cu titlurile cărților
+        bookListContainer.style.display = 'block';
+        
+        // Apelezăm funcția ArrayPlusDelay pentru a afișa titlurile cu întârziere de 2 secunde
+        ArrayPlusDelay(bookTitles, displayBookTitle, 2000);
+    }
+</script>
+
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Background Color with setTimeout</title>
+    <style>
+        #changingText {
+            border: 2px solid black;
+            padding: 10px;
+            background-color: white;
+            transition: background-color 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Change Background Color with setTimeout</h1>
+
+<div id="changingText">Acesta este un text cu fundal alb.</div>
+
+<script>
+    // Funcția pentru a schimba culoarea de fundal după 3 secunde
+    setTimeout(function() {
+        document.getElementById('changingText').style.backgroundColor = 'lightblue';
+    }, 3000);
+</script>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Background Color with setInterval</title>
+    <style>
+        #changingText {
+            border: 2px solid black;
+            padding: 10px;
+            background-color: white;
+            transition: background-color 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Change Background Color with setInterval</h1>
+
+<div id="changingText">Acesta este un text cu fundal alb.</div>
+
+<script>
+    // Funcția pentru a schimba culoarea de fundal la fiecare 5 secunde
+    setInterval(function() {
+        const currentColor = document.getElementById('changingText').style.backgroundColor;
+        if (currentColor == 'white') {
+            document.getElementById('changingText').style.backgroundColor = 'lightblue';
+        } else {
+            document.getElementById('changingText').style.backgroundColor = 'white';
+        }
+    }, 5000);
+</script>
+
+</body>
+</html>
+
+
+
+
+</body>
+</html>

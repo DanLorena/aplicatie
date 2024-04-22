@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        tr.selected {
+            background-color: lightblue;
+        }
+    </style>
+</head>
+<body>
+
+<table id="booksTable">
+    <thead>
+        <tr>
+            <th>Nr.</th>
+            <th>Book</th>
+            <th>Price</th>
+            <th>Option</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">TOTAL</td>
+            <td id="total">0.00</td>
+        </tr>
+    </tfoot>
+</table>
+
+<script>
+    const books = [
+        { nr: 1, book: "JavaScript: javascript basics for Beginners", price: 19.99 },
+        { nr: 2, book: "JavaScript from Beginner to Professional", price: 34.99 },
+        { nr: 3, book: "JavaScript From Zero to Hero", price: 26.24 },
+        { nr: 4, book: "JavaScript: The Definitive Guide, 7th Edition", price: 32.49 },
+        { nr: 5, book: "Eloquent JavaScript, 3rd Edition ", price: 20.94 }
+    ];
+
+    const tableBody = document.querySelector('#booksTable tbody');
+    const totalElement = document.querySelector('#total');
+    let total = 0;
+
+    // Populăm tabelul cu datele din masivul books
+    books.forEach(book => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${book.nr}</td>
+            <td>${book.book}</td>
+            <td>${book.price.toFixed(2)}</td>
+            <td><button onclick="selectRow(${book.nr - 1})">Select</button></td>
+        `;
+        tableBody.appendChild(row);
+    });
+
+    // Funcția care se apelează la selectarea unui rând
+    function selectRow(index) {
+        const rows = document.querySelectorAll('#booksTable tbody tr');
+        const selectedRow = rows[index];
+        
+        // Toggle clasa 'selected' pentru a schimba culoarea rândului
+        selectedRow.classList.toggle('selected');
+
+        // Actualizăm totalul
+        const price = books[index].price;
+        if (selectedRow.classList.contains('selected')) {
+            total += price;
+        } else {
+            total -= price;
+        }
+        totalElement.textContent = total.toFixed(2);
+    }
+</script>
+
+</body>
+</html>

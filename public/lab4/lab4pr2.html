@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+            cursor: pointer;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<table id="studentTable">
+    <thead>
+        <tr>
+            <th>Nr.</th>
+            <th>Student</th>
+            <th>L1</th>
+            <th>L2</th>
+            <th>L3</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>s1</td>
+            <td class="l1">Click pentru imagine</td>
+            <td class="l2">02/tema1.png</td>
+            <td class="l3">03/tema1.png</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>s2</td>
+            <td class="l1">Click pentru imagine</td>
+            <td class="l2">02/tema2.png</td>
+            <td class="l3">03/tema2.png</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>s3</td>
+            <td class="l1">Click pentru imagine</td>
+            <td class="l2">02/tema3.png</td>
+            <td class="l3">03/tema3.png</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>s4</td>
+            <td class="l1">Click pentru imagine</td>
+            <td class="l2">02/tema4.png</td>
+            <td class="l3">03/tema4.png</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>s5</td>
+            <td class="l1">Click pentru imagine</td>
+            <td class="l2">02/tema5.png</td>
+            <td class="l3">03/tema5.png</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>s6</td>
+            <td class="l1">Click pentru imagine</td>
+            <td class="l2">02/tema6.png</td>
+            <td class="l3">03/tema6.png</td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    const l1Cells = document.querySelectorAll('.l1');
+
+    l1Cells.forEach(cell => {
+        cell.addEventListener('click', function() {
+            const l2Image = this.nextElementSibling.textContent;
+            const l3Image = this.nextElementSibling.nextElementSibling.textContent;
+            alert("Imagine din L2: " + l2Image + "\nImagine din L3: " + l3Image);
+        });
+    });
+</script>
+
+</body>
+</html>

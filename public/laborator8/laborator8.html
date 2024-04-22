@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cautare in text</title>
+    <style>
+        #search {
+            width: 300px;
+            padding: 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cautare in text</h1>
+    <input type="text" id="search" placeholder="Caută...">
+    <div id="textContainer">
+        Fotbalul este un sport de echipă ce se dispută între două echipe alcătuite din 11 jucători fiecare. La începutul secolului al XXI-lea era jucat de peste 250 de milioane de jucători în peste 200 de țări, ceea ce îl face cel mai popular sport din lume.[1][2][3][4] Se joacă cu o minge sferică pe un teren dreptunghiular, acoperit cu iarbă, cu câte o poartă la fiecare capăt. Scopul jocului este de a înscrie goluri introducând mingea în poarta adversarului. În afara portarului, ceilalți jucători nu se pot folosi de mâini pentru a manevra mingea. Câștigătorul meciului este echipa care a înscris mai multe goluri la încheierea partidei.
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('search');
+        const textContainer = document.getElementById('textContainer');
+
+        function highlightText() {
+            const searchText = searchInput.value.trim();
+            const text = textContainer.textContent;
+            const highlightedText = text.replace(new RegExp(searchText, 'gi'), match => `<span class="highlight">${match}</span>`);
+            textContainer.innerHTML = highlightedText;
+        }
+
+        searchInput.addEventListener('input', highlightText);
+    </script>
+</body>
+</html>
