@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Înregistrare Activitate</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 5px;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #activitiesList {
+            margin-top: 20px;
+        }
+        #activitiesList ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #activitiesList ul li {
+            margin-bottom: 5px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Înregistrare Activitate</h1>
+
+    <form id="activityForm">
+        <label for="user">Utilizator:</label>
+        <input type="text" id="user" name="user" required>
+        <label for="week">Săptămâna:</label>
+        <input type="text" id="week" name="week" required>
+        <label for="activities">Activități:</label>
+        <input type="text" id="activities" name="activities" required>
+        <button type="submit">Înregistrare</button>
+    </form>
+
+    <div id="activitiesList">
+        <h2>Lista activităților:</h2>
+        <ul id="activities">
+            <!-- Activitățile vor fi adăugate aici prin JavaScript -->
+        </ul>
+    </div>
+
+    <script>
+        async function displayActivities() {
+            const response = await fetch('http://localhost:3000/activities');
+            const data = await response.json();
+            const activitiesList = document.getElementById('activities');
+            activitiesList.innerHTML = '';
+
+            data.forEach(activity => {
+                const li = document.createElement('li');
+                li.textContent = `Utilizator: ${activity.user}, Săptămâna: ${activity.week}, Activități: ${activity.activities.join(', ')}`;
+                activitiesList.appendChild(li);
+            });
+        }
+
+        async function submitActivity(event) {
+            event.preventDefault();
+            const user = document.getElementById('user').value;
+            const week = document.getElementById('week').value;
+            const activities = document.getElementById('activities').value.split(',');
+
+            await fetch('http://localhost:3000/activities', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user, week, activities })
+            });
+
+            document.getElementById('user').value = '';
+            document.getElementById('week').value = '';
+            document.getElementById('activities').value = '';
+            displayActivities();
+        }
+
+        const activityForm = document.getElementById('activityForm');
+        activityForm.addEventListener('submit', submitActivity);
+        displayActivities();
+    </script>
+</body>
+</html>
