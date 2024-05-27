@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenare Masa și Scaune cu Three.js</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <script>
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 8;
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Creează grupuri pentru masă și scaune
+        var tableGroup = new THREE.Group();
+        var chairsGroup = new THREE.Group();
+
+        // Creează blatul mesei
+        var tableTopGeometry = new THREE.BoxGeometry(4, 0.2, 2);
+        var tableTopMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
+        var tableTop = new THREE.Mesh(tableTopGeometry, tableTopMaterial);
+        tableGroup.add(tableTop);
+
+        // Creează picioarele mesei
+        var legGeometry = new THREE.BoxGeometry(0.2, 1.5, 0.2);
+        var legMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
+        var leg1 = new THREE.Mesh(legGeometry, legMaterial);
+        var leg2 = new THREE.Mesh(legGeometry, legMaterial);
+        var leg3 = new THREE.Mesh(legGeometry, legMaterial);
+        var leg4 = new THREE.Mesh(legGeometry, legMaterial);
+        leg1.position.set(-1.8, -0.75, -0.8);
+        leg2.position.set(1.8, -0.75, -0.8);
+        leg3.position.set(-1.8, -0.75, 0.8);
+        leg4.position.set(1.8, -0.75, 0.8);
+        tableGroup.add(leg1);
+        tableGroup.add(leg2);
+        tableGroup.add(leg3);
+        tableGroup.add(leg4);
+
+        // Adaugă masa în scenă
+        scene.add(tableGroup);
+
+        // Creează geometria scaunului
+        var chairGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+        var seatGeometry = new THREE.BoxGeometry(1, 0.1, 1);
+        var backGeometry = new THREE.BoxGeometry(1, 1, 0.1);
+        var legGeometry = new THREE.BoxGeometry(0.1, 0.5, 0.1);
+
+        // Creează materialul scaunului
+        var chairMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
+
+        // Creează scaunele pentru partea de jos
+        for (var i = 0; i < 3; i++) {
+            var chair = new THREE.Mesh(chairGeometry, chairMaterial);
+
+            // Adaugă șezutul
+            var seat = new THREE.Mesh(seatGeometry, chairMaterial);
+            seat.position.y = -0.25; // Ajustează poziția șezutului
+            chair.add(seat);
+
+            // Adaugă spătarul
+            var back = new THREE.Mesh(backGeometry, chairMaterial);
+            back.position.y = 0.25; // Ajustează poziția spătarului
+            back.position.z = 0.5; // Plasează spătarul în spatele șezutului
+            chair.add(back);
+
+            // Adaugă picioarele
+            var frontLeftLeg = new THREE.Mesh(legGeometry, chairMaterial);
+            frontLeftLeg.position.set(-0.4, -0.25, -0.4); // Plasează piciorul în partea din față și stângă
+            chair.add(frontLeftLeg);
+
+            var frontRightLeg = new THREE.Mesh(legGeometry, chairMaterial);
+            frontRightLeg.position.set(0.4, -0.25, -0.4); // Plasează piciorul în partea din față și dreaptă
+            chair.add(frontRightLeg);
+
+            var backLeftLeg = new THREE.Mesh(legGeometry, chairMaterial);
+            backLeftLeg.position.set(-0.4, -0.25, 0.4); // Plasează piciorul în partea din spate și stângă
+            chair.add(backLeftLeg);
+
+            var backRightLeg = new THREE.Mesh(legGeometry, chairMaterial);
+            backRightLeg.position.set(0.4, -0.25, 0.4); // Plasează piciorul în partea din spate și dreaptă
+            chair.add(backRightLeg);
+
+            // Rotirea scaunului pentru a fi cu fața către masa
+            chair.rotation.y = Math.PI; // Rotirea pe axa Y pentru a fi cu fața către masa
+
+            chairsGroup.add(chair);
+        }
+
+        // Creează scaunele pentru partea de sus
+        for (var i = 0; i < 3; i++) {
+            var chair = new THREE.Mesh(chairGeometry, chairMaterial);
+
+            // Adaugă șezutul
+            var seat = new THREE.Mesh(seatGeometry, chairMaterial);
+            seat.position.y = -0.25; // Ajustează poziția șezutului
+            chair.add(seat);
+
+            // Adaugă spătarul
+            var back = new THREE.Mesh(backGeometry, chairMaterial);
+            back.position.y = 0.25; // Ajustează poziția spătarului
+            back.position.z = -0.5; // Plasează spătarul în spatele șezutului
+            chair.add(back);
+
+            // Adaugă picioarele
+            var frontLeftLeg = new THREE.Mesh(legGeometry, chairMaterial);
+            frontLeftLeg.position.set(-0.4, -0.25, -0.4); // Plasează piciorul în partea din față și stângă
+            chair.add(frontLeftLeg);
+
+            var frontRightLeg = new THREE.Mesh(legGeometry, chairMaterial);
+            frontRightLeg.position.set(0.4, -0.25, -0.4); // Plasează piciorul în partea din față și dreaptă
+            chair.add(frontRightLeg);
+
+            var backLeftLeg = new THREE.Mesh(legGeometry, chairMaterial);
+            backLeftLeg.position.set(-0.4, -0.25, 0.4); // Plasează piciorul în partea din spate și stângă
+            chair.add(backLeftLeg);
+
+            var backRightLeg = new THREE.Mesh(legGeometry, chairMaterial);
+            backRightLeg.position.set(0.4, -0.25, 0.4); // Plasează piciorul în partea din spate și dreaptă
+            chair.add(backRightLeg);
+
+            // Rotirea scaunului pentru a fi cu fața către masa
+            chair.rotation.y = Math.PI; // Rotirea pe axa Y pentru a fi cu fața către masa
+
+            chairsGroup.add(chair);
+        }
+
+        // Aranjează scaunele în jurul mesei pentru partea de jos
+        chairsGroup.children[0].position.set(-1.5, -0.5, -1.5);
+        chairsGroup.children[1].position.set(0, -0.5, -1.5);
+        chairsGroup.children[2].position.set(1.5, -0.5, -1.5);
+
+        // Aranjează scaunele în jurul mesei pentru partea de sus
+        chairsGroup.children[3].position.set(1.5, -0.5, 1.5);
+        chairsGroup.children[4].position.set(0, -0.5, 1.5);
+        chairsGroup.children[5].position.set(-1.5, -0.5, 1.5);
+
+        // Adaugă scaunele în scenă
+        scene.add(chairsGroup);
+
+        // Adaugă lumina ambientală
+        var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        // Adaugă lumina direcțională
+        var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(0, 1, 1);
+        scene.add(directionalLight);
+
+        // Variabile pentru rotație
+        var rotateLeft = false;
+        var rotateRight = false;
+        var rotateUp = false;
+        var rotateDown = false;
+
+        // Adaugă evenimente pentru tastele direcționale
+        document.addEventListener('keydown', function(event) {
+            switch (event.key) {
+                case 'ArrowLeft':
+                    rotateLeft = true;
+                    break;
+                case 'ArrowRight':
+                    rotateRight = true;
+                    break;
+                case 'ArrowUp':
+                    rotateUp = true;
+                    break;
+                case 'ArrowDown':
+                    rotateDown = true;
+                    break;
+            }
+        });
+
+        document.addEventListener('keyup', function(event) {
+            switch (event.key) {
+                case 'ArrowLeft':
+                    rotateLeft = false;
+                    break;
+                case 'ArrowRight':
+                    rotateRight = false;
+                    break;
+                case 'ArrowUp':
+                    rotateUp = false;
+                    break;
+                case 'ArrowDown':
+                    rotateDown = false;
+                    break;
+            }
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (rotateLeft) {
+                tableGroup.rotation.y += 0.05;
+                chairsGroup.rotation.y += 0.05;
+            }
+            if (rotateRight) {
+                tableGroup.rotation.y -= 0.05;
+                chairsGroup.rotation.y -= 0.05;
+            }
+            if (rotateUp) {
+                tableGroup.rotation.x += 0.05;
+                chairsGroup.rotation.x += 0.05;
+            }
+            if (rotateDown) {
+                tableGroup.rotation.x -= 0.05;
+                chairsGroup.rotation.x -= 0.05;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
